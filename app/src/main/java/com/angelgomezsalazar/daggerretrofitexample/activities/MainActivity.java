@@ -1,7 +1,9 @@
-package com.angelgomezsalazar.daggerretrofitexample;
+package com.angelgomezsalazar.daggerretrofitexample.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.angelgomezsalazar.daggerretrofitexample.R;
 
 public class MainActivity extends AppCompatActivity {
 
