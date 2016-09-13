@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        callGenreApi();
+        initialLoad();
     }
 
     private void callUpcomingMovieApi(int page) {
@@ -112,5 +112,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    // Used for Initial Load and any reloading that may take place
+    private void initialLoad() {
+        callGenreApi();
     }
 }
