@@ -35,6 +35,7 @@ public class NetworkModule {
         this.baseUrl = baseUrl;
     }
 
+    // Generates HTTP Cache
     @Provides
     @Singleton
     Cache provideOkHttpCache(Application application) {
@@ -42,6 +43,7 @@ public class NetworkModule {
         return new Cache(application.getCacheDir(), cacheSize);
     }
 
+    // Add options to GSON here if you need them
     @Provides
     @Singleton
     Gson provideGson() {
@@ -49,6 +51,8 @@ public class NetworkModule {
         return gsonBuilder.create();
     }
 
+    // Provides us with cached responses if there is no network available, remove if you don' want
+    // it
     @Provides
     @Singleton
     Interceptor provideInterceptor (final Application application) {
@@ -71,6 +75,7 @@ public class NetworkModule {
         };
     }
 
+    // Creates OkHttpClient we will be using with retrofit, customize here if you neeed to
     @Provides
     @Singleton
     OkHttpClient provideOkHttpClient(Cache cache, Interceptor interceptor) {
@@ -81,6 +86,8 @@ public class NetworkModule {
         return client;
     }
 
+    // Retrofit provider, you can change the converter factory (don't forget to add a provider for
+    // that factory)
     @Provides
     @Singleton
     Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
