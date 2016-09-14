@@ -32,6 +32,9 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
+    // TODO: Put your own api key here
+    private String apiKey = Api.KEY;
+
     private List<Movie> movieList;
 
     @BindView(R.id.main_recycler_view) RecyclerView movieRecyclerView;
@@ -72,9 +75,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void callUpcomingMovieApi(int page) {
-        // TODO: Put your own api key here
         Call<MovieResponse> upcomingMovieCall =
-                movieApi.getUpcomingMovies(page, Api.KEY);
+                movieApi.getUpcomingMovies(page, apiKey);
         upcomingMovieCall.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
@@ -91,9 +93,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void callGenreApi() {
         MovieApi movieApi = retrofit.create(MovieApi.class);
-        // TODO: Put your own api key here
         Call<GenreResponse> genreCall =
-                movieApi.getGenreList(Api.KEY);
+                movieApi.getGenreList(apiKey);
         genreCall.enqueue(new Callback<GenreResponse>() {
             @Override
             public void onResponse(Call<GenreResponse> call, Response<GenreResponse> response) {
