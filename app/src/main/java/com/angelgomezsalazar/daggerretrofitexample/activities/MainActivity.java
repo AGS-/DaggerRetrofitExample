@@ -1,6 +1,7 @@
 package com.angelgomezsalazar.daggerretrofitexample.activities;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.main_recycler_view) RecyclerView movieRecyclerView;
     private RecyclerView.Adapter movieAdapter;
+    @BindView(R.id.main_swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
 
     private MovieApi movieApi;
     @Inject
@@ -71,6 +73,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        // Butterknife doesn't have an annotation for OnRefreshListeners
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initialLoad();
+            }
+        });
         initialLoad();
     }
 
@@ -82,11 +91,12 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 movieList.addAll(response.body().results);
                 movieAdapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
-
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
@@ -110,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<GenreResponse> call, Throwable t) {
-
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
